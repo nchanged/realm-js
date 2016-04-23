@@ -1,6 +1,5 @@
 var _ = require('lodash');
 var es = require('event-stream');
-var jsep = require('jsep');
 var _ = require('lodash');
 
 var Parser = function() {
