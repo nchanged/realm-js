@@ -11,8 +11,23 @@ realm.module("app.components.FirstComponent", ["app.helpers.SuperUtils"], functi
 
 	return ___module__promised__;
 });
+realm.module("app.components.SecondComponent", ["app.helpers.UserInteractionUtils", "app.helpers.SuperUtils"], function (myUtls, utils) {
 
+	var ___module__promised__ = function ___module__promised__() {
+		_classCallCheck(this, ___module__promised__);
+	};
+
+	return ___module__promised__;
+});
 realm.module("app.helpers.SuperUtils", [], function () {
+
+	var ___module__promised__ = function ___module__promised__() {
+		_classCallCheck(this, ___module__promised__);
+	};
+
+	return ___module__promised__;
+});
+realm.module("app.helpers.UserInteractionUtils", [], function () {
 
 	var ___module__promised__ = function ___module__promised__() {
 		_classCallCheck(this, ___module__promised__);
