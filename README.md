@@ -15,7 +15,7 @@ export class {
 }
 ```
 
-Check a simple [test-app/src/app](project) and see what it compiles [test-app/build.js](into)
+Check a simple [project](test-app/src/app/) and see what it compiles into [test-app/build.js](test-app/build.js)
 
 ## Under the hood
 
