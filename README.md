@@ -27,7 +27,6 @@ If you want to serve realm.js you can just use express middleware
 ```js
 app.use('/ream.js', realm.serve.express());
 ```
-
 To get contents (for build)
 ```js
 realm.serve.getContents()
@@ -80,7 +79,7 @@ realm.module("myModule", ["moduleA", "moduleB"], function(moduleA, moduleB){
 
 ## Porting your favorite libraries
 Universal wrapper has a parameter called isNode.
-So, if you want to import lodash (my favorite) or any other libaries. you can do it like so:
+So, if you want to import lodash (my favorite) or any other libaries. you can register them like so:
 
 ```js
 domain.module("shared._", function() {
@@ -102,10 +101,10 @@ export () => {
 }
 ```
 
-## Using realm transpiler
+## Using the realm transpiler
 
 The current transpiler is a very simple regExp like script. (I am not sure if i can call transpiler though).
-I have been using this library for years, and decided to release just now. I tried creating a babel plugin, but i simply don't have time for that. If you feel like, go ahead!
+I have been using this library for years, and decided to release just now. I've tried to create a babel plugin, but this thing is just ginormous and i simply don't have time for that. If you feel like, go ahead!
 
 ### A simple import
 If a module does not belong to any package:
@@ -157,3 +156,6 @@ gulp.task("build-test", function() {
       .pipe(gulp.dest("test-app/"))
 });
 ```
+
+## Contribute
+Please, contribute. The code isn't in its best shape. (Developed it few years ago). Release with few improvements, made it universal and added the "transpiler". Change the world!
