@@ -1,5 +1,5 @@
 # realm-js
-RealmJs is a new dependency injection/module handling tool for Node.js and javascript projects.
+RealmJs is a new dependency injection/module handling tool for Node.js and javascript projects. The library is universal (isomorphic). You can easily share modules between frontend and backend accordingly.
 
 ## Introduction
 Real.js comes with an absolutely superb transpiler, which resemble es6 imports. It essentially has the same syntax but with few improvements
@@ -15,7 +15,23 @@ export class {
 }
 ```
 
+### Install
+```
+npm install realm-js --save
+```
+
 Check a simple [project](test-app/src/app/) and see what it compiles into [test-app/build.js](test-app/build.js) (with a little help from bable es6)
+
+If you want to serve realm.js you can just use express middleware
+
+```js
+app.use('/ream.js', realm.serve.express());
+```
+
+To get contents (for build)
+```js
+realm.serve.getContents()
+```
 
 ## Under the hood
 
@@ -54,6 +70,37 @@ realm.requirePackage("app.components").then(function(components){
 });
 ```
 
+### Annotation
+Clearly, if you don't use ec6, or any other transpilers, you need to annotate modules
+```js
+realm.module("myModule", ["moduleA", "moduleB"], function(moduleA, moduleB){
+
+})
+```
+
+## Porting your favorite libraries
+Universal wrapper has a parameter called isNode.
+So, if you want to import lodash (my favorite) or any other libaries. you can do it like so:
+
+```js
+domain.module("shared._", function() {
+   return isNode ? require("lodash") : window._;
+});
+domain.module("shared.realm", function() {
+   return isNode ? require("realm-js") : window.realm;
+});
+
+```
+
+And here comes the juice:
+```js
+module Test;
+
+import _, realm from shared
+export () => {
+
+}
+```
 
 ## Bulding
 
