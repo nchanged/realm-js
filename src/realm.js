@@ -170,7 +170,7 @@
          var _packageServices = {}
          var self = this;
          return domainEach(global.__wires_services__, function(service, serviceName) {
-            var _package = serviceName.split(name);
+            var _package = serviceName.indexOf(name) === 0 ? name : false;
             if (_package[1]) {
                return self.require([serviceName], function(serviceInstance) {
                   _packageServices[serviceName] = serviceInstance
