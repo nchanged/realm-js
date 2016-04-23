@@ -2,7 +2,7 @@
 RealmJs is a new dependency injection/module handling tool for Node.js and javascript projects. The library is universal (isomorphic). You can easily share modules between frontend and backend accordingly.
 
 ## Introduction
-Real.js comes with an absolutely superb transpiler, which resemble es6 imports. It essentially has the same syntax but with few improvements
+Real.js comes with an absolutely superb transpiler, which resembles es6 imports. It essentially has the same syntax but with few improvements
 
 ```js
 module app.components.SecondComponent;
@@ -20,7 +20,7 @@ export class {
 npm install realm-js --save
 ```
 
-Check a simple [project](test-app/src/app/) and see what it compiles into [test-app/build.js](test-app/build.js) (with a little help from bable es6)
+Check a simple [project](test-app/src/app/) and see what it compiles into [test-app/build.js](test-app/build.js) (with a little help from babel es6)
 
 If you want to serve realm.js you can just use express middleware
 
@@ -100,6 +100,33 @@ import _, realm from shared
 export () => {
 
 }
+```
+
+## Using realm transpiler
+
+The current transpiler is a very simple regExp like script. (I am not sure if i can call transpiler though).
+I have been using this library for years, and decided to release just now. I tried creating a babel plugin, but i simply don't have time for that. If you feel like, go ahead!
+
+### A simple import
+If a module does not belong to any package:
+```js
+import Module
+```
+
+If a module belongs to a package:
+```js
+import Module from app
+```
+
+Giving it alias
+```js
+import Module as mod from app
+```
+
+
+### Gulp
+```js
+realm.transpiler.importify()
 ```
 
 ## Bulding
