@@ -47,14 +47,18 @@ module.exports = {
       });
    },
    universalWrap: function() {
+      var self = this;
       return es.map(function(file, cb) {
          var fileContent = file.contents.toString()
-         var content = ['(function(isNode, realm) {\n'];
-         content.push(fileContent);
-         content.push("\n})(typeof exports !== 'undefined', typeof exports !== 'undefined' ? require('realm-js') : window.realm)");
-         file.contents = new Buffer(content.join(''));
+         file.contents = new Buffer(self.wrap(fileContent));
          cb(null, file);
       });
+   },
+   wrap: function(data) {
+      var content = ['(function(isNode, realm) {\n'];
+      content.push(data);
+      content.push("\n})(typeof exports !== 'undefined', typeof exports !== 'undefined' ? require('realm-js') : window.realm)");
+      return content.join('');
    },
    str: function(input) {
       var fileContent = input;
