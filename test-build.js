@@ -5,19 +5,19 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-realm.module("test.route.Main", ["realm.router.path", "realm.router.interceptor", "realm.router.assert", "realm.router.cors"], function (path, interceptor, assert, cors) {
+realm.module("test.route.Main", ["realm.router.path", "realm.router.interceptors", "realm.router.assert", "realm.router.cors"], function (path, interceptors, assert, cors) {
 	var _dec, _dec2, _dec3, _class;
 
-	var MainRoute = (_dec = cors(), _dec2 = path("/"), _dec3 = interceptor("test.interceptors.Permission"), _dec(_class = _dec2(_class = _dec3(_class = function () {
+	var MainRoute = (_dec = cors(), _dec2 = path("/"), _dec3 = interceptors("Permission", "SomeStuff"), _dec(_class = _dec2(_class = _dec3(_class = function () {
 		function MainRoute() {
 			_classCallCheck(this, MainRoute);
 		}
 
 		_createClass(MainRoute, null, [{
 			key: "get",
-			value: function get($query) {
-				i++;
-				return { a: $query.get("hello@int", 1) };
+			value: function get($query, $pukka) {
+
+				return { a: $pukka };
 			}
 		}, {
 			key: "post",
@@ -34,9 +34,20 @@ realm.module("test.route.Main", ["realm.router.path", "realm.router.interceptor"
 });
 realm.module("test.interceptors.Permission", [], function () {
 
-	var Permission = function Permission($req) {};
+	var Permission = function Permission($req) {
+
+		return { $pukka: "sukka" };
+	};
 
 	var ___module__promised__ = Permission;
+
+	return ___module__promised__;
+});
+realm.module("test.interceptors.SomeStuff", [], function () {
+
+	var SomeStuff = function SomeStuff($req) {};
+
+	var ___module__promised__ = SomeStuff;
 
 	return ___module__promised__;
 });

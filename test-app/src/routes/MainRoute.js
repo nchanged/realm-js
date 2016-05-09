@@ -1,15 +1,15 @@
 module test.route.Main
-import path, interceptor, assert, cors from realm.router;
+import path, interceptors, assert, cors from realm.router;
 
 
 @cors()
 @path("/")
-@interceptor("test.interceptors.Permission")
+@interceptors("Permission","SomeStuff")
 
 class MainRoute {
-   static get($query){
-      i++;
-      return { a :$query.get("hello@int", 1) }
+   static get($query, $pukka){
+
+      return { a : $pukka }
    }
    static post(){
 

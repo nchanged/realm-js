@@ -30,10 +30,11 @@ realm.module("realm.router.cors", function() {
    }
 });
 
-realm.module("realm.router.interceptor", function() {
-   return function(interceptor) {
+realm.module("realm.router.interceptors", function() {
+   return function() {
+      var args = arguments;
       return function(target, property, descriptor) {
-         target.__intercept = interceptor;
+         target.__interceptors = _.flatten(args);
       }
    }
 });
@@ -157,13 +158,26 @@ var callCurrentResource = function(info, req, res) {
 
    var executeInteceptor = function() {
       return new Promise(function(resolve, reject) {
-         if (!handler.__intercept)
+         if (!handler.__interceptors)
             return resolve();
+         if( _.isArray(handler.__interceptors) ){
+            return realm.each(handler.__interceptors, function(str){
+               var p = Options.interceptors ? Options.interceptors + "." + str : str;
+               return realm.require(p, function(remoteInterceptor){
+                  return realm.require(remoteInterceptor,
+                     restLocalServices(info, mergedParams, req, res));
+               });
 
-         if (_.isString(handler.__intercept)) {
-            return realm.require(handler.__intercept, function(remoteInterceptor) {
-               return realm.require(remoteInterceptor,
-                  restLocalServices(info, mergedParams, req, res));
+            }).then(function(items){
+               var response = {};
+               _.each(items, function(data){
+                  _.each(data, function(value, key){
+                     if( _.isString(key) ){
+                        response[key] = value;
+                     }
+                  });
+               });
+               return response;
             }).then(resolve).catch(reject);
          }
          return resolve();
@@ -242,6 +256,9 @@ module.exports = {
       opts = opts || {};
       if ( opts.prettyErrors){
          Options.prettyErrors = true;
+      }
+      if ( opts.interceptors){
+         Options.interceptors = opts.interceptors;
       }
       this.init(_package).then(function(_packages){
          logger.info("Package '%s' has been successfully required", _package);
