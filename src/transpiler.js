@@ -46,18 +46,19 @@ module.exports = {
          cb(null, file);
       });
    },
-   universalWrap: function() {
+   universalWrap: function(dev) {
       var self = this;
       return es.map(function(file, cb) {
          var fileContent = file.contents.toString()
-         file.contents = new Buffer(self.wrap(fileContent));
+         file.contents = new Buffer(self.wrap(fileContent, dev));
          cb(null, file);
       });
    },
-   wrap: function(data) {
+   wrap: function(data, isDev) {
       var content = ['(function(isNode, realm) {\n'];
       content.push(data);
-      content.push("\n})(typeof exports !== 'undefined', typeof exports !== 'undefined' ? require('realm-js') : window.realm)");
+      var p = isDev ? "./index.js" : 'realm-js';
+      content.push("\n})(typeof exports !== 'undefined', typeof exports !== 'undefined' ? require('"+p+"') : window.realm)");
       return content.join('');
    },
    str: function(input) {

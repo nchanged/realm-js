@@ -141,18 +141,14 @@
       module: function(name, func, opts) {
          opts = opts || {};
          opts.cache = true;
-         this.register.apply(this, [name, func, opts]);
+         this.register.apply(this, [name, func, opts, true]);
       },
-      register: function(name, arg1, arg2) {
+      register: function(name, arg1, arg2, cache) {
          var localArgs = null;
          var target = arg1;
          if (_.isArray(arg1)) {
             localArgs = arg1;
             target = arg2;
-         }
-         var cache = false;
-         if (_.isPlainObject(arg2)) {
-            cache = arg2.cache === true;
          }
          global.__wires_services__ = global.__wires_services__ || {};
          global.__wires_services__[name] = {
@@ -215,7 +211,7 @@
 
             var results = [];
             return domainEach(args, function(item) {
-               if (item.cache && global.__wires_services_cached__[item.name]) {
+               if (item.cache && global.__wires_services_cached__[item.name] !== undefined) {
                   return global.__wires_services_cached__[item.name];
                }
                var argService = item.target;
