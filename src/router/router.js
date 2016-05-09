@@ -2,13 +2,13 @@ var pathToRegexp = require('path-to-regexp');
 var _ = require('lodash');
 var realm = require('../realm').realm;
 var query_getter = require('./query_getter.js');
-
+var NiceTrace = require("./traceback.js");
 var Promise = require("promise");
 var logger = require("log4js").getLogger("realm.router");
 var Promise = require("promise");
 var RestFul = [];
+var Options = {};
 var Interceptors = {};
-
 
 
 realm.module("realm.router.path", function() {
@@ -190,6 +190,9 @@ var callCurrentResource = function(info, req, res) {
          logger.fatal(e.stack || e);
          // If we have a direct error
          if (e.stack) {
+            if(Options.prettyErrors){
+               return res.status(500).send(NiceTrace(e));
+            }
             return res.status(500).send({
                status: 500,
                message: "Server Error"
@@ -235,7 +238,11 @@ module.exports = {
    init: function(_package) {
       return realm.requirePackage(_package);
    },
-   express: function(_package) {
+   express: function(_package, opts) {
+      opts = opts || {};
+      if ( opts.prettyErrors){
+         Options.prettyErrors = true;
+      }
       this.init(_package).then(function(_packages){
          logger.info("Package '%s' has been successfully required", _package);
          logger.info("Injested %s routes", _.keys(_packages).length );

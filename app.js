@@ -12,7 +12,7 @@ app.use('/bower_components', express.static(__dirname + '/bower_components'));
 require('./test-build.js');
 
 
-app.use(realm.router.express("test.route"))
+app.use(realm.router.express("test.route", {prettyErrors : true}))
 
 var port = process.env.PORT || 3051;
 var server = app.listen(port, function() {

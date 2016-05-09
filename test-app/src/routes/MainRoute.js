@@ -8,7 +8,7 @@ import path, interceptor, assert, cors from realm.router;
 
 class MainRoute {
    static get($query){
-
+      i++;
       return { a :$query.get("hello@int", 1) }
    }
    static post(){

@@ -16,7 +16,7 @@ realm.module("test.route.Main", ["realm.router.path", "realm.router.interceptor"
 		_createClass(MainRoute, null, [{
 			key: "get",
 			value: function get($query) {
-
+				i++;
 				return { a: $query.get("hello@int", 1) };
 			}
 		}, {
