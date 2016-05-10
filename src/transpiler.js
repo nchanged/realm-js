@@ -42,11 +42,12 @@ var Parser = function() {
 }
 
 var wrapContents = function(data, isDev) {
-   
+
    var content = ['(function(___scope___) { var $isBackend = ___scope___.isNode; var realm  = ___scope___.realm;\n'];
    content.push(data);
    var p = isDev ? "./index.js" : 'realm-js';
-   content.push("\n})(function(self){ var isNode = typeof exports !== 'undefined'; return { isNode : isNode, realm : isNode ? require('"+p+"') : self.realm}}(this));");
+   content.push("\n})(function(self){ var isNode = typeof exports !== 'undefined'; return { isNode : isNode, realm : isNode ? require('" + p +
+      "') : self.realm}}(this));");
    return content.join('');
 }
 var transpileString = function(input, opts) {
@@ -59,6 +60,7 @@ var transpileString = function(input, opts) {
    var newLines = [];
    var injections = [];
    var useRealm = false;
+
    var moduleResult;
    for (var i in lines) {
       var line = lines[i];
@@ -69,12 +71,18 @@ var transpileString = function(input, opts) {
          skipLine = true;
          useRealm = true;
       }
+      // custom module name
+      var moduleMatched;
+      if ((moduleMatched = line.match(/^module\s+([a-z0-9.$_]+)/i))) {
+         modulePath = moduleMatched[1];
+         skipLine = true;
+      }
 
       // exports
       var _exports = line.match(/^(export\s+)(.*)/);
       if (_exports && useRealm) {
          if (modulePath) {
-            line = line.replace(_exports[1], "\nreturn ");
+            line = line.replace(_exports[1], "\n$_exports = ");
          }
       }
 
@@ -119,8 +127,9 @@ var transpileString = function(input, opts) {
       fn.push(annotations.join(", "));
       fn.push("], \n\tfunction(");
       fn.push(moduleNames.join(", "))
-      fn.push("){");
+      fn.push("){ var $_exports;");
       newLines.splice(0, 0, fn.join(''));
+      newLines.push("return $_exports;");
       newLines.push("});")
    }
    return newLines.join('\n');
@@ -132,7 +141,7 @@ module.exports = function(opts) {
    var base = opts.base;
    var self = this;
 
-   if (opts.wrap){
+   if (opts.wrap) {
       return es.map(function(file, cb) {
          var fileContent = file.contents.toString()
          file.contents = new Buffer(wrapContents(fileContent, opts.dev));

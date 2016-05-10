@@ -5,15 +5,30 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+realm.module("$custom", [], function () {
+  var $_exports;
+
+  $_exports = function Pukka() {
+    _classCallCheck(this, Pukka);
+  };
+
+  return $_exports;
+});
 realm.module("test.MySuperClass", ["myapp.myModule", "myapp.utils.lodash"], function (myModule, _) {
+  var $_exports;
+
   var MySuperClass = function MySuperClass() {
     _classCallCheck(this, MySuperClass);
   };
 
-  return MySuperClass;
+  $_exports = MySuperClass;
+
+  return $_exports;
 });
 realm.module("test.route.MainRoute", ["realm.router.path", "realm.router.inject", "realm.router.assert", "realm.router.cors", "test.route.Permissions"], function (path, inject, assert, cors, Permissions) {
   var _dec, _dec2, _dec3, _class;
+
+  var $_exports;
 
   var MainRoute = (_dec = cors(), _dec2 = path("/"), _dec3 = inject(Permissions, '$permission'), _dec(_class = _dec2(_class = _dec3(_class = function () {
     function MainRoute() {
@@ -37,10 +52,14 @@ realm.module("test.route.MainRoute", ["realm.router.path", "realm.router.inject"
   }()) || _class) || _class) || _class);
   ;
 
-  return MainRoute;
+  $_exports = MainRoute;
+
+  return $_exports;
 });
 realm.module("test.route.Permissions", ["realm.router.inject", "test.route.SomeStuff"], function (inject, SomeStuff) {
   var _dec4, _class2;
+
+  var $_exports;
 
   var Permission = (_dec4 = inject(SomeStuff), _dec4(_class2 = function () {
     function Permission() {
@@ -58,9 +77,13 @@ realm.module("test.route.Permissions", ["realm.router.inject", "test.route.SomeS
   }()) || _class2);
 
 
-  return Permission;
+  $_exports = Permission;
+
+  return $_exports;
 });
 realm.module("test.route.SomeStuff", [], function () {
+  var $_exports;
+
   var SomeStuff = function () {
     function SomeStuff() {
       _classCallCheck(this, SomeStuff);
@@ -76,46 +99,44 @@ realm.module("test.route.SomeStuff", [], function () {
     return SomeStuff;
   }();
 
-  return SomeStuff;
+  $_exports = SomeStuff;
+
+  return $_exports;
 });
 realm.module("test.components.FirstComponent", ["test.app.helpers.SuperUtils"], function (utils) {
+  var $_exports;
 
-  return function () {
-    function _class3() {
-      _classCallCheck(this, _class3);
-    }
+  $_exports = function $_exports() {
+    _classCallCheck(this, $_exports);
+  };
 
-    return _class3;
-  }();
+  return $_exports;
 });
 realm.module("test.components.SecondComponent", ["test.app.helpers.UserInteractionUtils", "test.app.helpers.SuperUtils"], function (myUtls, utils) {
+  var $_exports;
 
-  return function () {
-    function _class4() {
-      _classCallCheck(this, _class4);
-    }
+  $_exports = function $_exports() {
+    _classCallCheck(this, $_exports);
+  };
 
-    return _class4;
-  }();
+  return $_exports;
 });
 realm.module("test.helpers.SuperUtils", [], function () {
+  var $_exports;
 
-  return function () {
-    function _class5() {
-      _classCallCheck(this, _class5);
-    }
+  $_exports = function $_exports() {
+    _classCallCheck(this, $_exports);
+  };
 
-    return _class5;
-  }();
+  return $_exports;
 });
 realm.module("test.helpers.UserInteractionUtils", [], function () {
+  var $_exports;
 
-  return function () {
-    function _class6() {
-      _classCallCheck(this, _class6);
-    }
+  $_exports = function $_exports() {
+    _classCallCheck(this, $_exports);
+  };
 
-    return _class6;
-  }();
+  return $_exports;
 });
 })(function(self){ var isNode = typeof exports !== 'undefined'; return { isNode : isNode, realm : isNode ? require('./index.js') : self.realm}}(this));
