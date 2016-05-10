@@ -235,6 +235,7 @@
                   return argService || item;
                }
             }).then(function(results) {
+               
                return target.apply(instance || results, results);
             }).then(resolve).catch(reject);
          });

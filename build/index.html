@@ -14,14 +14,16 @@
 
    <script src="/bower_components/lodash/dist/lodash.min.js"></script>
 
-   <script src="/realm.min.js"></script>
+   <script src="/build/realm.min.js"></script>
+   <script src="/build/a.js"></script>
 
    <script>
    realm.module("A", function(){
       return {
          hello : new Date().getTime()
       }
-   })
+   });
+
 
 
 

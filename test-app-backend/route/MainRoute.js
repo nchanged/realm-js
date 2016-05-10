@@ -1,12 +1,13 @@
-module test.route.Main
+"use realm";
+
 import path, inject, assert, cors from realm.router;
 
-import Permission from test.injectors
+import Permissions from test.route;
 
 @cors()
 @path("/")
 
-@inject(Permission, '$permission')
+@inject(Permissions, '$permission')
 
 class MainRoute {
     static get($query, $permission) {

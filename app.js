@@ -9,7 +9,7 @@ app.use('/re.js', realm.serve.express());
 app.use('/bower_components', express.static(__dirname + '/bower_components'));
 
 
-require('./test-build.js');
+require('./test-backend.js');
 
 
 app.use(realm.router.express("test.route", {prettyErrors : true, injectors : 'test.injectors'}))

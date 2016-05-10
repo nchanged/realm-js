@@ -1,8 +1,7 @@
-module test.injectors.Permission;
-
+"use realm";
 
 import inject from realm.router;
-import SomeStuff from test.injectors
+import SomeStuff from test.route;
 
 @inject(SomeStuff)
 

@@ -1,4 +1,4 @@
-module test.injectors.SomeStuff;
+"use realm";
 
 class SomeStuff {
    static inject($req)
@@ -6,6 +6,5 @@ class SomeStuff {
       return "some stuff from SomeStuff"
    }
 }
-
 
 export SomeStuff;

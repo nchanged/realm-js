@@ -5,14 +5,15 @@ RealmJs is a new dependency injection/module handling tool for Node.js and javas
 Real.js comes with an absolutely superb transpiler, which resembles es6 imports. It essentially has the same syntax but with few improvements
 
 ```js
-module app.components.SecondComponent;
+"use realm";
 
-import UserInteractionUtils as myUtls from app.helpers;
-import SuperUtils as utils from app.helpers;
+import myModule as mod from myapp;
+import lodash as _ from myapp.utils;
 
-export class {
+class MySuperClass {
 
 }
+export MySuperClass;
 ```
 
 ### Install
@@ -20,7 +21,7 @@ export class {
 npm install realm-js --save
 ```
 
-Check a simple [project](test-app/src/app/) and see what it compiles into [test-app/build.js](test-app/build.js) (with a little help from babel es6)
+Check a simple [project](test-app/src/app/) and see what it compiles into [test-backend.js](test-backend.js) (with a little help from babel es7)
 
 If you want to serve realm.js you can just use express middleware
 
@@ -83,22 +84,12 @@ So, if you want to import lodash (my favorite) or any other libaries. you can re
 
 ```js
 domain.module("shared._", function() {
-   return isNode ? require("lodash") : window._;
+   return $isBackend ? require("lodash") : window._;
 });
 domain.module("shared.realm", function() {
-   return isNode ? require("realm-js") : window.realm;
+   return $isBackend ? require("realm-js") : window.realm;
 });
 
-```
-
-And here comes the juice:
-```js
-module Test;
-
-import _, realm from shared
-export () => {
-
-}
 ```
 
 ## Using the realm transpiler
@@ -125,35 +116,37 @@ import Module as mod from app
 
 ### Gulp
 ```js
-realm.transpiler.importify()
+realm.transpiler({
+      preffix: "test",
+      base : "test-app-backend",
+      target : "./test-backend.js"
+})
+```
+
+Wrapping into a universal function
+```js
+realm.transpiler({wrap : true})
 ```
 
 ## Bulding
 
 You can use babel to transpile your code into anything you like. (RealmJs transpiler should come first)
 
-Here is a sample build script;
+Here is a sample build task;
 
 ```js
-var gulp = require("gulp");
-var babel = require("gulp-babel");
-var concat = require("gulp-concat");
-var concatUtil = require('gulp-concat-util');
-var rename = require("gulp-rename");
-var realm = require('realm-js');
-var uglify = require('gulp-uglify');
-
-gulp.task("build-test", function() {
-   return gulp.src("test-app/src/**/*.js")
-      .pipe(realm.transpiler.importify())
-      .pipe(concat("build.js"))
-      .pipe(babel())
-      .pipe(realm.transpiler.universalWrap())
-      .on('error', function(e) {
-         console.log('>>> ERROR', e.stack);
-         this.emit('end');
-      })
-      .pipe(gulp.dest("test-app/"))
+gulp.task("build-backend", function() {
+   return gulp.src("test-app-backend/**/*.js").pipe(realm.transpiler({
+         preffix: "test",
+         base : "test-app-backend",
+         target : "./test-backend.js"
+      }))
+      .pipe(babel({
+         presets: ["es2016"],
+         plugins: ["transform-decorators-legacy"]
+      }))
+      .pipe(realm.transpiler({wrap : true}))
+      .pipe(gulp.dest("./"));
 });
 ```
 
