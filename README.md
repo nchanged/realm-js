@@ -2,12 +2,12 @@
 RealmJs is a new dependency injection/module handling tool for Node.js and javascript projects. The library is universal (isomorphic). You can easily share modules between frontend and backend accordingly.
 
 ## Introduction
-Real.js comes with an absolutely superb transpiler, which resembles es6 imports. It essentially has the same syntax but with few improvements
+Real.js comes with an absolutely superb transpiler, which resembles es6 imports. It essentially has the same syntax with few improvements
 
 ```js
 "use realm";
 
-import myModule as mod from myapp;
+import myModule from myapp;
 import lodash as _ from myapp.utils;
 
 class MySuperClass {
@@ -16,12 +16,25 @@ class MySuperClass {
 export MySuperClass;
 ```
 
+Realm transpiler goes through files and converts, say MySuperClass.js file into
+```js
+realm.module("test.MySuperClass", ["myapp.myModule", "myapp.utils.lodash"], function (myModule, _) {
+   class MySuperClass {
+
+   }
+  return MySuperClass;
+});
+```
+
+Add babel7 and your are unstoppable!
+
+
 ### Install
 ```
 npm install realm-js --save
 ```
 
-Check a simple [project](test-app/src/app/) and see what it compiles into [test-backend.js](test-backend.js) (with a little help from babel es7)
+Check a simple [project](test-app-backend) and see what it compiles into [test-backend.js](test-backend.js) (with a little help from babel es7)
 
 If you want to serve realm.js you can just use express middleware
 
@@ -36,7 +49,7 @@ realm.serve.getContents()
 ## Under the hood
 
 ### Creating modules/services
-Everything revolves around ec6 promises. Say we define a module
+Everything revolves around es6 promises:
 ```js
 realm.module("MyFirstModule", function() {
    return new Promise(function(resolve, reject){
