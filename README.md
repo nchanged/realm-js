@@ -92,7 +92,7 @@ realm.module("myModule", ["moduleA", "moduleB"], function(moduleA, moduleB){
 ```
 
 ## Porting your favorite libraries
-Universal wrapper has a parameter called isNode.
+Universal wrapper has a parameter called $isBackend.
 So, if you want to import lodash (my favorite) or any other libaries. you can register them like so:
 
 ```js
@@ -164,4 +164,4 @@ gulp.task("build-backend", function() {
 ```
 
 ## Contribute
-Please, contribute. The code isn't in its best shape. (Developed it few years ago). Release with few improvements, made it universal and added the "transpiler". Change the world!
+Please, contribute. The code isn't in its best shape but rocks!
