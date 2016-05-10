@@ -1,8 +1,11 @@
-module test.interceptors.SomeStuff;
+module test.injectors.SomeStuff;
 
-var SomeStuff = ($req) => {
-
-
+class SomeStuff {
+   static inject($req)
+   {
+      return "some stuff from SomeStuff"
+   }
 }
+
 
 export SomeStuff;

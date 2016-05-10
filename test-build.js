@@ -5,19 +5,21 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-realm.module("test.route.Main", ["realm.router.path", "realm.router.interceptors", "realm.router.assert", "realm.router.cors"], function (path, interceptors, assert, cors) {
+realm.module("test.route.Main", ["realm.router.path", "realm.router.inject", "realm.router.assert", "realm.router.cors", "test.injectors.Permission"], function (path, inject, assert, cors, Permission) {
 	var _dec, _dec2, _dec3, _class;
 
-	var MainRoute = (_dec = cors(), _dec2 = path("/"), _dec3 = interceptors("Permission", "SomeStuff"), _dec(_class = _dec2(_class = _dec3(_class = function () {
+	var MainRoute = (_dec = cors(), _dec2 = path("/"), _dec3 = inject(Permission, '$permission'), _dec(_class = _dec2(_class = _dec3(_class = function () {
 		function MainRoute() {
 			_classCallCheck(this, MainRoute);
 		}
 
 		_createClass(MainRoute, null, [{
 			key: "get",
-			value: function get($query, $pukka) {
+			value: function get($query, $permission) {
 
-				return { a: $pukka };
+				return {
+					a: $permission
+				};
 			}
 		}, {
 			key: "post",
@@ -32,20 +34,44 @@ realm.module("test.route.Main", ["realm.router.path", "realm.router.interceptors
 
 	return ___module__promised__;
 });
-realm.module("test.interceptors.Permission", [], function () {
+realm.module("test.injectors.Permission", ["realm.router.inject", "test.injectors.SomeStuff"], function (inject, SomeStuff) {
+	var _dec4, _class2;
 
-	var Permission = function Permission($req) {
+	var Permission = (_dec4 = inject(SomeStuff), _dec4(_class2 = function () {
+		function Permission() {
+			_classCallCheck(this, Permission);
+		}
 
-		return { $pukka: "sukka" };
-	};
+		_createClass(Permission, null, [{
+			key: "inject",
+			value: function inject($req, $attrs, SomeStuff) {
+				return { "permission yee": "hello world", something: SomeStuff, attrs: $attrs };
+			}
+		}]);
+
+		return Permission;
+	}()) || _class2);
+
 
 	var ___module__promised__ = Permission;
 
 	return ___module__promised__;
 });
-realm.module("test.interceptors.SomeStuff", [], function () {
+realm.module("test.injectors.SomeStuff", [], function () {
+	var SomeStuff = function () {
+		function SomeStuff() {
+			_classCallCheck(this, SomeStuff);
+		}
 
-	var SomeStuff = function SomeStuff($req) {};
+		_createClass(SomeStuff, null, [{
+			key: "inject",
+			value: function inject($req) {
+				return "some stuff from SomeStuff";
+			}
+		}]);
+
+		return SomeStuff;
+	}();
 
 	var ___module__promised__ = SomeStuff;
 

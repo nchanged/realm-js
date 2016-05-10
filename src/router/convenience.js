@@ -35,7 +35,7 @@ module.exports = {
             if (element.type === "CallExpression") {
                funcs.push({
                   name: element.callee.name,
-                  attrs: _.pluck(element.arguments, 'value')
+                  attrs: _.map(element.arguments, 'value')
                });
             }
             if (element.type === "Identifier") {
@@ -45,6 +45,7 @@ module.exports = {
             }
          });
       } catch (e) {
+         console.log(e.stack)
          console.error("Error while parsing " + str);
          console.error(e);
       }
