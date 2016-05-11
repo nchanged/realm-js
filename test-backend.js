@@ -103,7 +103,7 @@ realm.module("test.route.SomeStuff", [], function () {
 
   return $_exports;
 });
-realm.module("test.components.FirstComponent", ["test.app.helpers.SuperUtils"], function (utils) {
+realm.module("test.app.components.FirstComponent", ["test.app.helpers.SuperUtils"], function (utils) {
   var $_exports;
 
   $_exports = function $_exports() {
@@ -112,7 +112,7 @@ realm.module("test.components.FirstComponent", ["test.app.helpers.SuperUtils"], 
 
   return $_exports;
 });
-realm.module("test.components.SecondComponent", ["test.app.helpers.UserInteractionUtils", "test.app.helpers.SuperUtils"], function (myUtls, utils) {
+realm.module("test.app.components.SecondComponent", ["test.app.helpers.UserInteractionUtils", "test.app.helpers.SuperUtils"], function (myUtls, utils) {
   var $_exports;
 
   $_exports = function $_exports() {
@@ -121,7 +121,7 @@ realm.module("test.components.SecondComponent", ["test.app.helpers.UserInteracti
 
   return $_exports;
 });
-realm.module("test.helpers.SuperUtils", [], function () {
+realm.module("test.app.helpers.SuperUtils", [], function () {
   var $_exports;
 
   $_exports = function $_exports() {
@@ -130,7 +130,7 @@ realm.module("test.helpers.SuperUtils", [], function () {
 
   return $_exports;
 });
-realm.module("test.helpers.UserInteractionUtils", [], function () {
+realm.module("test.app.helpers.UserInteractionUtils", [], function () {
   var $_exports;
 
   $_exports = function $_exports() {

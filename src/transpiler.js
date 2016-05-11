@@ -135,6 +135,14 @@ var transpileString = function(input, opts) {
    return newLines.join('\n');
 
 }
+
+function cleanUpModulePath(path){
+   if( path[0] === "/"){
+      path = path.slice(1, path.length)
+   }
+   return path.replace(/\//,".");
+}
+
 module.exports = function(opts) {
    var _opts = opts || {};
    var target = opts.target;
@@ -161,10 +169,13 @@ module.exports = function(opts) {
       if (baseFileName) {
          var p = baseFileName.split("/" + fileName);
          var _package = p.length === 2 ? p[0] : null;
+
+
          var moduleName = path.basename(fileName, '.js');
          var __dir = moduleName;
          if (_package) {
-            __dir = path.basename(_package) + "." + __dir;
+            _package = cleanUpModulePath(_package)
+            __dir = _package + "." + __dir;
          }
          if (preffix) {
             __dir = preffix + "." + __dir;
